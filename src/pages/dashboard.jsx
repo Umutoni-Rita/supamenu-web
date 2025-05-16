@@ -1,13 +1,17 @@
+import { FaEye, FaFilter, FaSort } from "react-icons/fa";
 import Sidebar from "../components/sidebar";
+import { items } from "../components/items";
 
 export default function Dashboard() {
   return (
-    <div className="h-screen flex flex-row">
+    <div className="flex h-screen w-full bg-gray-100">
       <Sidebar />
-      <div className="w-full bg-blue-50 p-3">
-        <nav className="flex flex-row justify-between mb-5">
-          <h1 className="text-2xl text-black font-semibold">OverView</h1>
-          <div className="flex flex-row justify-between">
+      
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Navigation Bar */}
+        <nav className="bg-blue-50 p-5 flex justify-between items-center">
+          <h1 className="text-2xl text-black font-semibold">Overview</h1>
+          <div className="flex items-center">
             <span className="mx-2">🔍</span>
             <span className="mx-2">🔔</span>
             <span className="mx-2 text-black">|</span>
@@ -15,34 +19,80 @@ export default function Dashboard() {
             <span className="mx-2">🧑🏽</span>
           </div>
         </nav>
-        <div className="flex flex-col justify-center items-center my-5">
-          <h1 className="text-2xl text-black font-semibold">New Client</h1>
-          <div className="border-b-gray-300 border-b-2 px-3 py-2 text-gray-400 flex flex-row justify-between w-[30%] my-5">
-            <p>Add a new client</p>
-            <button>➕</button>
-          </div>
-        </div>
-        <div className="bg-white mx-4 my-5 border border-gray-300 rounded-lg p-5">
-            <div className="flex flex-row justify-between">
-                <p className="text-xl text-black font-semibold">All Clients</p>
-                <div className="flex justify-between">
-                <h1 className="mx-3 text-lg"><span>📃</span>Sort</h1>
-                <h1 className="mx-3 text-lg"><span>📂</span>Filter</h1>
-                </div>
+        
+        {/* Main Content Area */}
+        <div className="flex-1 p-5 overflow-y-auto">
+          {/* New Client Section */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+              New Client
+            </h2>
+            <div className="flex items-center gap-3">
+              <input
+                type="text"
+                placeholder="Add a new client"
+                className="border border-gray-300 rounded-md px-4 py-2 w-1/3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition">
+                Add
+              </button>
             </div>
-            <table>
-                <thead>
-                <th>Clients details</th>
-                <th>Sales</th>
-                <th>Detailed Report</th>
-                <th>Category</th>
+            <hr className="mt-4 border-gray-300" />
+          </div>
+
+          {/* View All Clients Section */}
+          <div className="bg-white p-5 rounded-lg shadow-md">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">
+                View all clients
+              </h2>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-1 text-gray-600 cursor-pointer">
+                  <FaSort />
+                  <span>Sort</span>
+                </div>
+                <div className="flex items-center gap-1 text-gray-600 cursor-pointer">
+                  <FaFilter />
+                  <span>Filter</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Table Section */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 text-sm">
+                <thead className="bg-gray-100 text-gray-700 text-left">
+                  <tr>
+                    <th className="py-3 px-4 font-medium">Client Details</th>
+                    <th className="py-3 px-4 font-medium">Sales</th>
+                    <th className="py-3 px-4 font-medium">Detailed Report</th>
+                    <th className="py-3 px-4 font-medium">Category</th>
+                  </tr>
                 </thead>
-                <tbody>
-                    <tr>Soy Restaurant</tr>
-                    <tr>638203820Frw</tr>
-                    
+                <tbody className="bg-white divide-y divide-gray-200 text-gray-800">
+                  {items.map((item, i) => (
+                    <tr key={i} className="hover:bg-gray-50">
+                      <td className="py-4 px-4">{item.name}</td>
+                      <td className="py-4 px-4">
+                        <div>
+                          <p>{item.price}</p>
+                          <p className="text-xs text-gray-500">{item.date}</p>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">
+                        <FaEye className="text-orange-500 cursor-pointer" />
+                      </td>
+                      <td className="py-4 px-4">
+                        <button className="bg-gray-400 text-white font-bold px-3 py-1 rounded-full text-xs">
+                          {item.category}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
-            </table>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
